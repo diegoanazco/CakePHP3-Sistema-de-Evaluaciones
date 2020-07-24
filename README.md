@@ -480,7 +480,7 @@ public function isAuthorized($user)
 
 ## Autores
 
-* **Diego Añazco** - *Estudiante Universidad La Salle / Arequipa-Perú* - [PurpleBooth](https://github.com/diegoanazco)
-* **Richard Escobedo** - *Docente Universidad La Salle / Arequipa-Perú* - [PurpleBooth](https://github.com/rescobedoq)
+* **Diego Añazco** - *Estudiante Universidad La Salle / Arequipa-Perú* - https://github.com/diegoanazco
+* **Richard Escobedo** - *Docente Universidad La Salle / Arequipa-Perú* - https://github.com/rescobedoq
 
 
