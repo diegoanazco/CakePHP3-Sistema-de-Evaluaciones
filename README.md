@@ -420,7 +420,6 @@ Como vemos se agregó un template llamado: welcome_email_template. Este archivo 
 	Este es un email de SIEVAL.
 
 </p>
-
 ```
 
 #### Controller
@@ -449,6 +448,36 @@ public function add()
 
 
 ## Funcionalidades por rol
+En SIEVAL contamos con roles, un ejemplo que implementamos es para la entidad Test->Questions. Por lógica entendemos que un usuario con rol: ADMIN, puede crear y manipular el sistema a su antojo.
 
+Sin embargo, un usuario con rol: ESTUDIANTE, no tendría que poder modificar o crear un examen, esas funciones tienen que estar habilitadas para el usuario con rol: DOCENTE. 
+
+Estas funcionalidades por rol, lo implementamos en los siguientes archivos.
+
+#### Otorgando control total. Rol: ADMIN
+AppController, es el papá de todos los controladores, por lo que si le damos permisos al rol en este controlador, podrá controlar todo SIEVAL. 
+
+En la siguiente ruta: */root/src/Controller/AppController.php*
+```
+public function isAuthorized($user)
+{
+	if(isset($user['roles_id']) and $user['roles_id'] === 7)
+		return true;
+	return false;
+}
+```
+
+#### Otorgando control para exámenes. Rol: DOCENTE
+En las siguientes rutas: */root/src/Controller/TestsController.php* - */root/src/Controller/QuestionsController.php* - */root/src/Controller/AnnexesController.php*
+```
+public function isAuthorized($user)
+{
+	if(isset($user['roles_id']) and $user['roles_id'] === 6)
+		return true;
+	return false;
+}
+```
 
 ## Autores
+
+
