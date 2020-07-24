@@ -29,7 +29,7 @@ El modelo base académico es propuesto por el profesor: **Richard Escobedo (Gith
 
 Para el registro de usuario se implementaron dos nuevas funcionalidades: En el Controller y en Template Users.
 
-#### Controller
+### Controller
 Se modifica el siguiente archivo: *root/src/Controller/UsersController.php*. Añadiendo la siguiente función:
 ```
 public function register()
@@ -50,7 +50,7 @@ public function register()
 
 }
 ```
-#### Template
+### Template
 Se crea el siguiente archivo: *root/src/Template/Users/register.ctp*. Se utiliza la misma plantilla del Login, pero en el Body, se crea el formulario de la siguiente forma:
 ```
 <div class="limiter">
@@ -91,10 +91,10 @@ La funcionalidad de Login fue implementada siguiendo la documentación del Frame
 
 Nuevamente necesitamos modificar dos archivos: Controller y Template Users.
 
-#### Controller
+### Controller
 Se modifica el siguiente archivo: *root/src/Controller/UsersController.php*. Añadiendo las siguientes funciones:
 
-##### Login
+#### Login
 ```
 public function login()
 {
@@ -108,7 +108,7 @@ public function login()
     }
 }
 ```
-##### Logout
+#### Logout
 ```
 public function logout()
 {
@@ -116,11 +116,11 @@ public function logout()
   return $this->redirect($this->Auth->logout());
 }
 ```
-#### Template
+### Template
 Se crea el siguiente archivo: *root/src/Template/Users/login.ctp*. Se utiliza la misma plantilla del Login, pero en el Body, se crea el formulario de la siguiente forma:
 ```
 <div class="limiter">
-		<div class="container-login100" style="background-image: url('/~danazcob/sieval/css/css/images/bg-01.jpg');">
+		<div class="container-login100" style="background-image: url('/root/css/css/images/bg-01.jpg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<?= $this->Form->create(null,['class'=>'login100-form']) ?>
 				<span class="login100-form-title p-b-49">
@@ -151,20 +151,65 @@ Se crea el siguiente archivo: *root/src/Template/Users/login.ctp*. Se utiliza la
 
 ```
 ## CRUD de tablas
-
-Explain what these tests test and why
-
+El CRUD se puede implementar de manera muy sencilla gracias al Framework CakePHP 3.x
+Para ello nos dirigimos a la siguiente ruta: */root/bin* y ejecutamos la siguiente sentencia para cada una de nuestras entidades:
 ```
-Give an example
+sudo ./cake bake all *Entidad*
+
+Ej. sudo ./cake bake all Users
 ```
+Gracias a esta sentencia se crean automáticamente el: Model, Template y Controller de la entidad.
+Podemos seguir la documentación: https://book.cakephp.org/3/en/tutorials-and-examples/cms/tags-and-users.html
 
 ## Subir archivos
+Para poder subir archivos seguimos el siguiente tutorial: http://www.qualitians.com/file-upload-in-cakephp-3-using-cake-bake/ 
+En SIEVAL lo implementamos en la entidad: Questions. Explicaremos los aspectos más importantes para realizar esta funcionalidad.
 
-Explain what these tests test and why
+### Controller
+En el controller de Questions en la función **add()** agregaremos lo siguiente (se detalla con un comentario):
+```
+public function add()
+    {
+        $question = $this->Questions->newEntity();
+        if ($this->request->is('post')) {
+        //Inicio - Código para poder subir archivos
+        if(!empty($this->request->data['questions_photo']['name']))
+        {
+            $fileName = $this->request->data['questions_photo']['name'];
+            $uploadPath = 'uploads/files/';
+            $uploadFile = $uploadPath.$fileName;
+            if(move_uploaded_file($this->request->data['questions_photo']['tmp_name'],$uploadFile))
+            {
+	        $this->request->data['questions_photo'] = $uploadFile;
+            }
+        }
+        //Fin
+
+            $question = $this->Questions->patchEntity($question, $this->request->getData());
+            if ($this->Questions->save($question)) {
+                $this->Flash->success(__('The question has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The question could not be saved. Please, try again.'));
+        }
+        $tests = $this->Questions->Tests->find('list', ['limit' => 200]);
+        $this->set(compact('question', 'tests'));
+    }
+```
+
+### Template
+En los Template de Questions, tenemos que modificar: *add.ctp* y *edit.ctp* de la siguiente manera:
 
 ```
-Give an example
+<!-- Eliminamos -->
+<?= $this->Form->create($question) ?> 
+
+<!-- Agregamos para tener un multipart/form-data -->
+<?= $this->Form->create($questions_photo, ['type' => 'file']) ?>
 ```
+
+Recordemos que tenemos que agregar la siguiente carpeta para poder guardar nuestras imágenes: */root/webroot/uploads/files*
 
 ## Internacionalización
 
