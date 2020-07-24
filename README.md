@@ -16,6 +16,7 @@ Explicaremos de forma general el funcionamiento de SIEVAL como guía a quien des
    * [Validación de datos](#validación-de-datos)
    * [Envíos de email](#envíos-de-email)
    * [Funcionalidades por rol](#funcionalidades-por-rol)
+   * [Autores](#autores)
 <!--te-->
 
 
@@ -215,25 +216,239 @@ En los Template de Questions, tenemos que modificar: *add.ctp* y *edit.ctp* de l
 Recordemos que tenemos que agregar la siguiente carpeta para poder guardar nuestras imágenes: */root/webroot/uploads/files*
 
 ## Internacionalización
+Todo el código implementado ha sido realizado por nuestro profesor: **Richard Escobedo (Github: @rescobedoq)**
 
+Para la internacionalización se utilizaron el idioma español y portugues. Para ello se tuvieron que modificar los siguientes archivos. 
+
+#### Controller
+Debido a que la internacionalización se realiza en todos los controller, necesitamos ubicarnos en el AppController, en la siguiente ruta: */root/src/Controller/AppController.php*
+
+Agregamos las siguientes funciones:
+
+```
+public function changeLanguage($language=null)
+{
+	if($language!=null && in_array($language, ['en_US','es_PE','pt_BR']))
+	{
+		$this->request->session()->write('Config.language',$language);
+		return $this->redirect($this->referer());
+	}
+	else
+	{
+		$this->request->session()->write('Config.language',I18n::locale());
+		return $this->redirect($this->referer());
+	}
+}
+
+public function beforeFilter(Event $event)
+{
+	$this->set('current_user',$this->Auth->user());
+	if ($this->request->session()->check('Config.language'))
+	{
+		I18n::setLocale($this->request->session()->read('Config.language'));
+	}
+	else
+	{
+		$this->request->session()->write('Config.language',I18n::locale());
+	}
+
+}
+```
+
+
+#### Layout
+Se modifica el Layout porque es donde tiene como plantilla el header de todo SIEVAL. Se encuentra en la siguiente ruta: */root/src/Template/Layout/default.ctp*
+
+```
+<div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right visible-xs">
+                    <?= $this->fetch('tb_actions') ?>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+		<li><?= $this->Html->image("icons/32/Peru-Flag-icon.png", [
+			"alt" => "Español",
+			'url' => ['controller' => 'App', 'action' => 'change-language', 'es_PE']
+			]); ?></li>
+		<li><?= $this->Html->image("icons/32/United-States-Flag-icon.png", [
+			"alt" => "English",
+			'url' => ['controller' => 'App', 'action' => 'change-language', 'en_US']
+			]); ?></li>
+		<li><?= $this->Html->image("icons/32/Brazil-Flag-icon.png", [
+			"alt" => "Portugues",
+			'url' => ['controller' => 'App', 'action' => 'change-language', 'pt_BR']
+			]); ?></li>
+                </ul>
+            </div>
+```
+Recordemos que las imagenes se encuentran en la siguiente ruta, hay que crearla: */root/webroot/img/icons/32* 
 
 
 ## Bootstrap HTML5 CSS3 JQUERY
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+#### CRUD
+
+Para la implementación del nuevo diseño del CRUD de nuestras entidades se utilizó el siguiente plugin: https://github.com/FriendsOfCake/bootstrap-ui
+
+Después de su correcta instalación siguiendo los pasos que se especifican en el repositorio, recordemos algo importante. **Para que se aplique el plugin en nuestras entidades, debemos volver a realizar el bake all pero ahora con la siguiente sentencia**
+
+```
+sudo ./cake bake.bake all *Entidad* -t BootstrapUI
+
+Ej. sudo ./cake bake.bake all Questions -t BootstrapUI
+```
+De igual manera, al implementar este plugin, nuestro */Template/Layout*, ahora se encuentra en la siguiente ruta: */root/src/Template/Layout/TwitterBootstrap/dashboard.ctp*
+
+#### Login - Register
+
+Para la implementación del nuevo diseño del Login y Register, se utilizó una plantilla gratuita de la siguiente página: https://colorlib.com/wp/cat/login-forms/
+
+##### Adjuntando el css, fonts, vendor, js de la plantilla.
+Para que se pueda utilizar los archivos que vienen con la plantilla, tenemos que añadirlos en nuestro webroot, en la siguiente ruta: */root/webroot/css/css*
+
+De igual manera en nuestro archivos .ctp, tenemos que referencialos de la siguiente manera. 
+
+Tenemos las siguientes sentencias en el código original de la plantilla.
+```
+	<!--<link rel="stylesheet" type="text/css" href="css/util.css">-->
+	<!--<link rel="stylesheet" type="text/css" href="css/main.css">-->
+```
+Se tienen que reemplazar con las siguientes sentencias para que el Framework CakePHP 3.x lo reconozca:
+```
+	<?= $this->Html->css('css/css/util.css') ?>
+	<?= $this->Html->css('css/css/main.css') ?>
+```
 
 ## Validación de datos
+La validación de datos viene incluida con el Framework CakePHP 3.x, y de igual manera con el Plugin de Bootstrap que hemos instalado. Si queremos modificar de manera manual este tipo de validaciones tenemos que hacerlo en la siguiente ruta: */root/src/Model/Table/UsersTable.php*
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+```
+public function validationDefault(Validator $validator)
+{
+$validator
+    ->integer('users_id')
+    ->allowEmptyString('users_id', null, 'create');
+
+$validator
+    ->scalar('users_name')
+    ->maxLength('users_name', 150)
+    ->requirePresence('users_name', 'create')
+    ->notEmptyString('users_name');
+}
+```
+Si queremos un mensaje por defecto, tendríamos que modificar la siguiente linea:
+```
+    ->notEmptyString('users_name', 'Mensaje propio');
+```
 
 ## Envíos de email
+Para la funcionalidad de envíos de Email se utilizó el siguiente tutorial: https://www.youtube.com/watch?v=cEwf9PpbMcQ&t=490s
+De igual manera repasemos las funcionalidades más importantes para su correcto funcionamiento:
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+#### App Config.
+En el AppConfig, tenemos que agregar nuestros correos que deseamos utilizar para el envio de los mismo, de la siguiente manera: */root/config/app.php*
+```
+    'EmailTransport' => [
+        'default' => [
+            'className' => MailTransport::class,
+            /*
+             * The following keys are used in SMTP transports:
+             */
+            'host' => 'localhost',
+            'port' => 25,
+            'timeout' => 30,
+            'username' => null,
+            'password' => null,
+            'client' => null,
+            'tls' => null,
+            'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+        ],
+
+	'gmail' => [
+		'className' => 'Smtp',
+		'host' => 'ssl://smtp.gmail.com',
+		'port' => 465,
+		'timeout' => 30,
+		'username' => 'emailpropio@gmail.com',
+		'password' => 'passwordemail',
+		'client' => null,
+		'tls' => null,
+		'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+	],
+    ],
+```
+Y unas lineas más abajo se agrega las siguientes sentencias
+```
+    'Email' => [
+        'default' => [
+            'transport' => 'default',
+            'from' => 'you@localhost',
+            //'charset' => 'utf-8',
+            //'headerCharset' => 'utf-8',
+        ],
+
+	'tutoriais' => [
+		'transport' => 'gmail',
+		'from' => ['emailpropio@gmail.com' => 'Mensaje'],
+	],
+    ],
+```
+
+#### Bake Mailer
+El Framework CakePHP 3.x cuenta con una funcionalidad para el envio de correos, para ellos tenemos que realizar la siguiente sentencia: */root/bin*
+```
+	sudo ./cake bake mailer *Entidad*
+	Ej. sudo ./cake bake mailer Users
+```
+Esta funcionalidad nos creara diferentes archivos, modificaremos el siguiente: */root/src/Mailer/UsersMailer.php*
+```
+public function welcome($users)
+{
+	$this->to($users->users_email)
+	->profile('tutoriais')
+	->emailFormat('html')
+	->template('welcome_email_template')
+	->layout('default')
+	->viewVars(['nome' => $users->users_name])
+	->subject(sprintf('Bienvenido, %s', $users->users_name));
+}
+```
+Como vemos se agregó un template llamado: welcome_email_template. Este archivo lo creamos en: */root/src/Template/Email/html/welcome_email_template.ctp*
+```
+<h1> Bienvenido </h1>
+<p>
+	Este es un email de SIEVAL.
+
+</p>
+
+```
+
+#### Controller
+Finalmente agregaremos la funcionalidad en nuestro Controller: *root/src/Controller/UsersController.php*
+```
+public function add()
+    {
+        $user = $this->Users->newEntity();
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+	   if ($this->Users->save($user)) {
+		//Inicio - Función de Email
+		$this->getMailer('Users')->send('welcome', [$user]);
+		//Fin - Recordemos que el 'welcome' es el nombre de la función en: UsersMailer.php
+                $this->Flash->success(__('The user has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+        $roles = $this->Users->Roles->find('list', ['limit' => 200]);
+        $degrees = $this->Users->Degrees->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'roles', 'degrees'));
+    }
+```
+
 
 ## Funcionalidades por rol
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+## Autores
