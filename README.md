@@ -25,11 +25,11 @@ El modelo base académico es propuesto por el profesor: **Richard Escobedo (Gith
 
 <a href="https://imgur.com/VVu5bZZ"><img src="https://i.imgur.com/VVu5bZZ.jpg" title="source: imgur.com" /></a>
 
-## Registro de un usuario
+### Registro de un usuario
 
 Para el registro de usuario se implementaron dos nuevas funcionalidades: En el Controller y en Template Users.
 
-### Controller
+#### Controller
 Se modifica el siguiente archivo: *root/src/Controller/UsersController.php*. Añadiendo la siguiente función:
 ```
 public function register()
@@ -50,7 +50,7 @@ public function register()
 
 }
 ```
-### Template
+#### Template
 Se crea el siguiente archivo: *root/src/Template/Users/register.ctp*. Se utiliza la misma plantilla del Login, pero en el Body, se crea el formulario de la siguiente forma:
 ```
 <div class="limiter">
@@ -91,10 +91,10 @@ La funcionalidad de Login fue implementada siguiendo la documentación del Frame
 
 Nuevamente necesitamos modificar dos archivos: Controller y Template Users.
 
-### Controller
+#### Controller
 Se modifica el siguiente archivo: *root/src/Controller/UsersController.php*. Añadiendo las siguientes funciones:
 
-#### Login
+##### Login
 ```
 public function login()
 {
@@ -108,7 +108,7 @@ public function login()
     }
 }
 ```
-#### Logout
+##### Logout
 ```
 public function logout()
 {
@@ -116,7 +116,7 @@ public function logout()
   return $this->redirect($this->Auth->logout());
 }
 ```
-### Template
+#### Template
 Se crea el siguiente archivo: *root/src/Template/Users/login.ctp*. Se utiliza la misma plantilla del Login, pero en el Body, se crea el formulario de la siguiente forma:
 ```
 <div class="limiter">
@@ -168,7 +168,7 @@ Para poder subir archivos seguimos el siguiente tutorial: http://www.qualitians.
 
 En SIEVAL lo implementamos en la entidad: Questions. Explicaremos los aspectos más importantes para realizar esta funcionalidad.
 
-### Controller
+#### Controller
 En el controller de Questions en la función **add()** agregaremos lo siguiente (se detalla con un comentario):
 ```
 public function add()
@@ -201,7 +201,7 @@ public function add()
     }
 ```
 
-### Template
+#### Template
 En los Template de Questions, tenemos que modificar: *add.ctp* y *edit.ctp* de la siguiente manera:
 
 ```
@@ -216,7 +216,7 @@ Recordemos que tenemos que agregar la siguiente carpeta para poder guardar nuest
 
 ## Internacionalización
 
-Add additional notes about how to deploy this on a live system
+
 
 ## Bootstrap HTML5 CSS3 JQUERY
 
