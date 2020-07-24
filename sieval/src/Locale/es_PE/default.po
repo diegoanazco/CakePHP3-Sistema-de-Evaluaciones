@@ -1,0 +1,330 @@
+msgid "New User"
+msgstr "Nuevo Usuario"
+
+msgid "List Roles"
+msgstr "Lista de Roles"
+
+msgid "New Role"
+msgstr "Nuevo Rol"
+
+msgid "List Degrees"
+msgstr "Lista de Grados Académicos"
+
+msgid "New Degree"
+msgstr "Nuevo Grado Académico"
+
+msgid "Users"
+msgstr "Usuarios"
+
+msgid "Roles"
+msgstr "Roles"
+
+msgid "Degrees"
+msgstr "Grados Académicos"
+
+msgid "Users Name"
+msgstr "Nombre"
+
+msgid "Users Fathersurname"
+msgstr "Apellido Paterno"
+
+msgid "Users Mothersurname"
+msgstr "Apellido Materno"
+
+msgid "Users Email"
+msgstr "Email"
+
+msgid "Actions"
+msgstr "Acciones"
+
+msgid "New Test"
+msgstr "Nueva Evaluación"
+
+msgid "List Assignments"
+msgstr "Lista de Asignaciones"
+
+msgid "New Assignment"
+msgstr "Nueva Asignación"
+
+msgid "List Types Test"
+msgstr "Lista de Tipos de Evaluaciones"
+
+msgid "New Types Test"
+msgstr "Nuevo Tipo de Evaluación"
+
+msgid "List Semesters"
+msgstr "Lista de Semestres"
+
+msgid "New Semester"
+msgstr "Nuevo Semestre"
+
+msgid "List Schools"
+msgstr "Lista de Escuelas"
+
+msgid "New School"
+msgstr "Nueva Escuela"
+
+msgid "Assignment"
+msgstr "Asignación"
+
+msgid "Types Test"
+msgstr "Tipos de Evaluación"
+
+msgid "Semesters"
+msgstr "Semestre"
+
+msgid "Schools"
+msgstr "Escuelas"
+
+msgid "Test Date"
+msgstr "Fecha Evaluación"
+
+msgid "Test Start"
+msgstr "Hora de Inicio"
+
+msgid "Test End"
+msgstr "Hora de Fin"
+
+msgid "Created"
+msgstr "Fecha Creación"
+
+msgid "Modified"
+msgstr "Fecha Modificación"
+
+msgid "View"
+msgstr "Ver"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "previous"
+msgstr "anterior"
+
+msgid "next"
+msgstr "siguiente"
+
+msgid "Are you sure you want to delete # {0}?"
+msgstr "¿Estás seguro de eliminar # {0}?"
+
+msgid "Edit User"
+msgstr "Editar Usuario"
+
+msgid "Delete User"
+msgstr "Eliminar Usuario"
+
+msgid "List Users"
+msgstr "Lista de Usuarios"
+
+msgid "Role"
+msgstr "Rol"
+
+msgid "Degree"
+msgstr "Grado Académico"
+
+msgid "Users Password"
+msgstr "Password"
+
+msgid "Users Cellphone"
+msgstr "Celular del Usuario"
+
+msgid "Users Id"
+msgstr "Id Usuario"
+
+msgid "Users Birthday"
+msgstr "Fecha de Nacimiento"
+
+msgid "Users Status"
+msgstr "Estado Usuario"
+
+msgid "Edit {0}"
+msgstr "Editar {0}"
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Roles"
+msgstr "Roles"
+
+msgid "Roles Description"
+msgstr "Descripción Rol"
+
+msgid "Roles Id"
+msgstr "Id Rol"
+
+msgid "Edit Role"
+msgstr "Editar Role"
+
+msgid "Delete Role"
+msgstr "Eliminar Role"
+
+msgid "Degrees Description"
+msgstr "Descripción de Grados Académicos"
+
+msgid "Degrees Acronym"
+msgstr "Acrónimo de Grado Académico"
+
+msgid "Edit Degree"
+msgstr "Editar Grado Académico"
+
+msgid "Delete Degree"
+msgstr "Eliminar Grado Académico"
+
+msgid "Degrees Id"
+msgstr "Id Grado Académico"
+
+msgid "List TypesTest"
+msgstr "Lista de Tipos Exámenes"
+
+msgid "Tests"
+msgstr "Exámenes"
+
+msgid "Tests Start"
+msgstr "Inicio de Examen"
+
+msgid "Edit Test"
+msgstr "Editar Examen"
+
+msgid "Delete Test"
+msgstr "Eliminar Examen"
+
+msgid "List Tests"
+msgstr "Lista de Exámenes"
+
+msgid "Semester"
+msgstr "Semestre"
+
+msgid "School"
+msgstr "Escuela"
+
+msgid "Tests Id"
+msgstr "Id Examen"
+
+msgid "Tests End"
+msgstr "Fin de Examen"
+
+msgid "Types Test Description"
+msgstr "Descripción Tipo de Examen"
+
+msgid "Types Test Weight"
+msgstr "Peso de Examen"
+
+msgid "Edit Types Test"
+msgstr "Editar Tipo de Examen"
+
+msgid "Delete Types Test"
+msgstr "Eliminar Tipo de Examen"
+
+msgid "Types Test Id"
+msgstr "Id Tipo de Examen"
+
+msgid "New Question"
+msgstr "Nueva Pregunta"
+
+msgid "Questions"
+msgstr "Preguntas"
+
+msgid "Questions Score"
+msgstr "Puntaje Pregunta"
+
+msgid "Questions Header"
+msgstr "Encabezado Pregunta"
+
+msgid "Edit Question"
+msgstr "Editar Pregunta"
+
+msgid "Delete Question"
+msgstr "Eliminar Pregunta"
+
+msgid "List Questions"
+msgstr "Lista de Preguntas"
+
+msgid "Questions Id"
+msgstr "Id Pregunta"
+
+msgid "Add"
+msgstr "Agregar"
+
+msgid "Add {0}"
+msgstr "Agregar {0}"
+
+msgid "New Annex"
+msgstr "Nuevo Anexo"
+
+msgid "Annexes"
+msgstr "Anexos"
+
+msgid "Annexes Description"
+msgstr "Descripción Anexo"
+
+msgid "Edit Annex"
+msgstr "Editar Anexo"
+
+msgid "Delete Annex"
+msgstr "Eliminar Anexo"
+
+msgid "List Annexes"
+msgstr "Lista de Anexos"
+
+msgid "Annexes Id"
+msgstr "Id Anexo"
+
+msgid "Your username or password is incorrect."
+msgstr "Tu usuario o contraseña es incorrecta."
+
+msgid "You are now logged out."
+msgstr "Has cerrado sesión."
+
+msgid "The user has been saved."
+msgstr "El usuario ha sido guardado."
+
+msgid "The user has been deleted."
+msgstr "El usuario ha sido eliminado."
+
+msgid "The user could not be saved. Please, try again."
+msgstr "El usuario no pudo ser guardado. Por favor, intenta denuevo."
+
+msgid "The test has been saved."
+msgstr "El examen ha sido guardado."
+
+msgid "The test has been deleted."
+msgstr "El examen ha sido eliminado."
+
+msgid "The test could not be saved. Please, try again."
+msgstr "El examen no pudo ser guardado. Por favor, intenta denuevo."
+
+msgid "The types test has been saved."
+msgstr "El tipo de examen ha sido guardado."
+
+msgid "The types test has been deleted."
+msgstr "El tipo de examen ha sido eliminado."
+
+msgid "The types test could not be saved. Please, try again."
+msgstr "El tipo de examen no pudo ser guardado. Por favor, intenta denuevo."
+
+msgid "The question has been saved."
+msgstr "La pregunta ha sido guardada."
+
+msgid "The question has been deleted."
+msgstr "La pregunta ha sido eliminada."
+
+msgid "The question could not be saved. Please, try again."
+msgstr "La pregunta no pudo ser guardada. Por favor, intenta denuevo."
+
+msgid "The annex has been saved."
+msgstr "El anexo ha sido guardado."
+
+msgid "The annex has been deleted."
+msgstr "El anexo ha sido eliminado."
+
+msgid "The annex could not be saved. Please, try again."
+msgstr "El anexo no pudo ser guardado. Por favor, intenta denuevo."
+
+msgid "Questions Photo"
+msgstr "Url Foto Pregunta"
+
+
+
+
