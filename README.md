@@ -12,7 +12,7 @@ Explicaremos de forma general el funcionamiento de SIEVAL como guía a quien des
    * [CRUD de tablas](#crud-de-tablas)
    * [Subir archivos](#subir-archivos)
    * [Internacionalización](#internacionalización)
-   * [Bootstrap HTML5 CSS3 JQUERY](#Bootstrap-HTML5-CSS3-JQUERY)
+   * [Bootstrap HTML5 CSS3 JQUERY](#bootstrap-html5-css3-jquery)
    * [Validación de datos](#validación-de-datos)
    * [Envíos de email](#envíos-de-email)
    * [Funcionalidades por rol](#funcionalidades-por-rol)
@@ -21,34 +21,135 @@ Explicaremos de forma general el funcionamiento de SIEVAL como guía a quien des
 
 ## Modelo de Datos
 
-What things you need to install the software and how to install them
+El modelo base académico es propuesto por el profesor: **Richard Escobedo (Github: @rescobedoq)**. Pero para SIEVAL se agregaron las entidades que se encuentran de color verde. Presentamos el modelo de datos:
 
-```
-Give examples
-```
+<a href="https://imgur.com/VVu5bZZ"><img src="https://i.imgur.com/VVu5bZZ.jpg" title="source: imgur.com" /></a>
 
 ## Registro de un usuario
 
-A step by step series of examples that tell you how to get a development env running
+Para el registro de usuario se implementaron dos nuevas funcionalidades: En el Controller y en Template Users.
 
-Say what the step will be
+#### Controller
+Se modifica el siguiente archivo: *root/src/Controller/UsersController.php*. Añadiendo la siguiente función:
+```
+public function register()
+{
+        $user = $this->Users->newEntity();
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+        if ($this->Users->save($user)) {
+                $this->getMailer('Users')->send('welcome', [$user]);
+                $this->Flash->success(__('You are register and can login.'));
+                return $this->redirect(['action' => 'login']);
+            }
+            $this->Flash->error(__('You are not register. Please, try again.'));
+        }
+        $roles = $this->Users->Roles->find('list')->where(['Roles.roles_id !=' => 3]);
+        $degrees = $this->Users->Degrees->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'roles', 'degrees'));
+
+}
+```
+#### Template
+Se crea el siguiente archivo: *root/src/Template/Users/register.ctp*. Se utiliza la misma plantilla del Login, pero en el Body, se crea el formulario de la siguiente forma:
+```
+<div class="limiter">
+		<div class="container-login100" style="background-image: url('/root/css/css/images/bg-01.jpg');">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<?= $this->Form->create($user); ?>
+					<span class="login100-form-title p-b-49">
+						Register Sieval
+					</span>
+				    <?php
+				    echo $this->Form->control('roles_id',   ['default' =>  3]);
+				    echo $this->Form->control('degrees_id', ['default' =>  4]);
+				    echo $this->Form->control('users_name');
+				    echo $this->Form->control('users_fathersurname');
+				    echo $this->Form->control('users_mothersurname');
+				    echo $this->Form->control('users_email');
+				    echo $this->Form->control('users_password',["type" => "password"]);
+				    echo $this->Form->control('users_birthday');
+				    echo $this->Form->control('users_cellphone');
+				    echo $this->Form->control('users_status');
+				    ?>
+				<div class="container-login100-form-btn">
+					<div class="wrap-login100-form-btn">
+						<div class="login100-form-bgbtn"></div>
+						<button type="submit" class="login100-form-btn">
+								Register
+							</button>
+					</div>	
+				<?= $this->Form->end() ?>
+			</div>
+		</div>
+	</div>
 
 ```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
 ## Login
 
-Explain how to run the automated tests for this system
+La funcionalidad de Login fue implementada siguiendo la documentación del Framework CakePHP 3.x: https://book.cakephp.org/3/en/tutorials-and-examples/cms/authentication.html
 
+Nuevamente necesitamos modificar dos archivos: Controller y Template Users.
+
+#### Controller
+Se modifica el siguiente archivo: *root/src/Controller/UsersController.php*. Añadiendo las siguientes funciones:
+
+##### Login
+```
+public function login()
+{
+    if ($this->request->is('post')) {
+        $user = $this->Auth->identify();
+        if ($user) {
+            $this->Auth->setUser($user);
+            return $this->redirect($this->Auth->redirectUrl());
+        }
+        $this->Flash->error('Your username or password is incorrect.');
+    }
+}
+```
+##### Logout
+```
+public function logout()
+{
+  $this->Flash->success('You are now logged out.');
+  return $this->redirect($this->Auth->logout());
+}
+```
+#### Template
+Se crea el siguiente archivo: *root/src/Template/Users/login.ctp*. Se utiliza la misma plantilla del Login, pero en el Body, se crea el formulario de la siguiente forma:
+```
+<div class="limiter">
+		<div class="container-login100" style="background-image: url('/~danazcob/sieval/css/css/images/bg-01.jpg');">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<?= $this->Form->create(null,['class'=>'login100-form']) ?>
+				<span class="login100-form-title p-b-49">
+					Login Sieval
+				</span>
+					<?= $this->Form->control('users_email', ['class'=>'input100','placeholder' => 'Type your Email','label' => ['class' => 'label-input100'], "type" => "email"], ['templateVars' => ['help' => 'At least 8 characters long.']] ) ?>
+					<?= $this->Form->control('users_password', ['class' => 'input100','placeholder' => 'Type your Password', 'label' => ['class' => 'label-input100'], "type" => "password"] ) ?>
+					
+				<br></br>
+				<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button type="submit" class="login100-form-btn">
+								Login
+							</button>
+				</div>	
+				<div class="text-right p-t-8 p-b-31">
+					<a>
+						<?= $this->Html->link('or Register Here', ['controller' => 'users', 'action' => 'register']); ?>
+					</a>
+				</div>
+
+
+				<?= $this->Form->end() ?>
+			</div>
+		</div>
+	</div>
+
+```
 ## CRUD de tablas
 
 Explain what these tests test and why
