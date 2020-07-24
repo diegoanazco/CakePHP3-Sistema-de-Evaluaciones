@@ -152,6 +152,7 @@ Se crea el siguiente archivo: *root/src/Template/Users/login.ctp*. Se utiliza la
 ```
 ## CRUD de tablas
 El CRUD se puede implementar de manera muy sencilla gracias al Framework CakePHP 3.x
+
 Para ello nos dirigimos a la siguiente ruta: */root/bin* y ejecutamos la siguiente sentencia para cada una de nuestras entidades:
 ```
 sudo ./cake bake all *Entidad*
@@ -159,10 +160,12 @@ sudo ./cake bake all *Entidad*
 Ej. sudo ./cake bake all Users
 ```
 Gracias a esta sentencia se crean automáticamente el: Model, Template y Controller de la entidad.
+
 Podemos seguir la documentación: https://book.cakephp.org/3/en/tutorials-and-examples/cms/tags-and-users.html
 
 ## Subir archivos
 Para poder subir archivos seguimos el siguiente tutorial: http://www.qualitians.com/file-upload-in-cakephp-3-using-cake-bake/ 
+
 En SIEVAL lo implementamos en la entidad: Questions. Explicaremos los aspectos más importantes para realizar esta funcionalidad.
 
 ### Controller
